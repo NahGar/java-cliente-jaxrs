@@ -26,11 +26,45 @@ public class Main {
       //List<Curso> cursos = rootUri.request(MediaType.APPLICATION_JSON)
       //        .get(Response.class).readEntity(new GenericType<List<Curso>>(){});
 
-      response = rootUri.request(MediaType.APPLICATION_JSON).get();
-      List<Curso> cursos = response.readEntity(new GenericType<List<Curso>>(){});
-
       System.out.println("Listar:");
-      cursos.forEach(System.out::println);
+      listarCursos(rootUri);
 
+      System.out.println("Crear:");
+      Curso crearCurso = new Curso();
+      crearCurso.setNombre("Linux");
+      crearCurso.setDescripcion("Linux Redhat");
+      crearCurso.setInstructor("Bill Gates");
+      crearCurso.setDuracion(500D);
+
+      Entity<Curso> entityHeader = Entity.entity(crearCurso,MediaType.APPLICATION_JSON);
+      curso = rootUri.request(MediaType.APPLICATION_JSON).post(entityHeader,Curso.class);
+      System.out.println("Curso creado:"+curso);
+
+      listarCursos(rootUri);
+
+      System.out.println("Editar:");
+      Curso editarCurso = curso;
+      editarCurso.setNombre("Editado");
+
+      entityHeader = Entity.entity(editarCurso,MediaType.APPLICATION_JSON);
+      curso = rootUri.path("/"+curso.getId()).request(MediaType.APPLICATION_JSON)
+              .put(entityHeader,Curso.class);
+      System.out.println("Curso edoitado:"+curso);
+
+      listarCursos(rootUri);
+
+      System.out.println("Eliminar:");
+      rootUri.path("/"+curso.getId()).request().delete();
+
+      listarCursos(rootUri);
+
+   }
+
+   private static void listarCursos(WebTarget rootUri) {
+      List<Curso> cursos;
+      Response response;
+      response = rootUri.request(MediaType.APPLICATION_JSON).get();
+      cursos = response.readEntity(new GenericType<List<Curso>>(){});
+      cursos.forEach(System.out::println);
    }
 }
