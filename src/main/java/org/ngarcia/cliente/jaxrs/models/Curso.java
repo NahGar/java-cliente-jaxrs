@@ -10,7 +10,10 @@ public class Curso {
    private String nombre;
 
    private String descripcion;
-   private String instructor;
+
+   //private String instructor;
+   private Instructor instructor;
+
    private Double duracion;
 
    public Long getId() {
@@ -37,11 +40,11 @@ public class Curso {
       this.descripcion = descripcion;
    }
 
-   public String getInstructor() {
+   public Instructor getInstructor() {
       return instructor;
    }
 
-   public void setInstructor(String instructor) {
+   public void setInstructor(Instructor instructor) {
       this.instructor = instructor;
    }
 

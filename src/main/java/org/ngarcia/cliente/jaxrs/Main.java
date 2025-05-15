@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.ngarcia.cliente.jaxrs.models.Curso;
+import org.ngarcia.cliente.jaxrs.models.Instructor;
 
 import java.util.List;
 
@@ -33,7 +34,11 @@ public class Main {
       Curso crearCurso = new Curso();
       crearCurso.setNombre("Linux");
       crearCurso.setDescripcion("Linux Redhat");
-      crearCurso.setInstructor("Bill Gates");
+      //crearCurso.setInstructor("Bill Gates");
+      Instructor instructor = new Instructor();
+      instructor.setId(2L);
+      crearCurso.setInstructor(instructor);
+
       crearCurso.setDuracion(500D);
 
       Entity<Curso> entityHeader = Entity.entity(crearCurso,MediaType.APPLICATION_JSON);
